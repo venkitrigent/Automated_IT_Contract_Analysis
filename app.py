@@ -3,6 +3,7 @@ import json
 import time
 import os
 import sys
+import traceback
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -15,8 +16,10 @@ from utils.contract_analysis_crew import ContractAnalysisCrew
 try:
     from utils.azure_openai_config import get_azure_openai_client, get_native_azure_client
     USING_AZURE = True
-except ImportError:
+    print("Successfully loaded Azure OpenAI configuration")
+except ImportError as e:
     # Fallback to standard OpenAI
+    print(f"Error importing Azure OpenAI: {str(e)}")
     from utils.openai_fallback import get_openai_client, get_native_openai_client
     USING_AZURE = False
     print("Using standard OpenAI instead of Azure OpenAI due to import error")
@@ -66,6 +69,13 @@ st.markdown("""
         color: #4CAF50;
         font-weight: bold;
     }
+    .env-info {
+        background-color: #e0f7fa;
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        font-family: monospace;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -80,36 +90,59 @@ def validate_llm_config():
             "AZURE_OPENAI_API_VERSION"
         ]
         
-        missing_vars = [var for var in required_vars if not os.getenv(var)]
+        print(f"Checking Azure OpenAI environment variables...")
+        missing_vars = []
+        for var in required_vars:
+            value = os.getenv(var)
+            if not value:
+                missing_vars.append(var)
+            else:
+                print(f"✓ {var} is set")
         
         if missing_vars:
+            for var in missing_vars:
+                print(f"✗ {var} is missing")
             return False, f"Missing environment variables: {', '.join(missing_vars)}"
         
         # Test connection to Azure OpenAI
         try:
+            print(f"Testing Azure OpenAI connection...")
             client = get_native_azure_client()
             # Simple test to see if the client is working
             models = client.models.list()
+            print(f"✓ Azure OpenAI connection successful. Available models: {[m.id for m in models]}")
             return True, "Azure OpenAI configuration is valid."
         except Exception as e:
-            return False, f"Error connecting to Azure OpenAI: {str(e)}"
+            error_msg = str(e)
+            traceback.print_exc()
+            print(f"✗ Error connecting to Azure OpenAI: {error_msg}")
+            return False, f"Error connecting to Azure OpenAI: {error_msg}"
     else:
         # Standard OpenAI validation
         if not os.getenv("OPENAI_API_KEY"):
             # Try to use Azure key as fallback
             if os.getenv("AZURE_OPENAI_API_KEY"):
                 os.environ["OPENAI_API_KEY"] = os.getenv("AZURE_OPENAI_API_KEY")
+                print("Using AZURE_OPENAI_API_KEY as fallback for OPENAI_API_KEY")
             else:
+                print("✗ OPENAI_API_KEY is missing")
                 return False, "Missing OPENAI_API_KEY environment variable"
+        else:
+            print("✓ OPENAI_API_KEY is set")
                 
         # Test connection to OpenAI
         try:
+            print(f"Testing OpenAI connection...")
             client = get_native_openai_client()
             # Simple test to see if the client is working
             models = client.models.list()
+            print(f"✓ OpenAI connection successful")
             return True, "OpenAI configuration is valid."
         except Exception as e:
-            return False, f"Error connecting to OpenAI: {str(e)}"
+            error_msg = str(e)
+            traceback.print_exc()
+            print(f"✗ Error connecting to OpenAI: {error_msg}")
+            return False, f"Error connecting to OpenAI: {error_msg}"
 
 def main():
     # Title and description
@@ -126,10 +159,48 @@ def main():
     
     if not config_valid:
         st.error(f"LLM Configuration Error: {config_message}")
+        
+        # Show debug information if in development
+        with st.expander("Environment Debug Information"):
+            st.markdown("<div class='env-info'>", unsafe_allow_html=True)
+            if USING_AZURE:
+                st.write("### Azure OpenAI Settings")
+                azure_vars = {
+                    "AZURE_OPENAI_API_KEY": "***" + (os.getenv("AZURE_OPENAI_API_KEY", "")[-4:] if os.getenv("AZURE_OPENAI_API_KEY") else "Not Set"),
+                    "AZURE_OPENAI_ENDPOINT": os.getenv("AZURE_OPENAI_ENDPOINT", "Not Set"),
+                    "AZURE_OPENAI_DEPLOYMENT_NAME": os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "Not Set"),
+                    "AZURE_OPENAI_API_VERSION": os.getenv("AZURE_OPENAI_API_VERSION", "Not Set")
+                }
+                for key, value in azure_vars.items():
+                    st.write(f"{key}: {value}")
+            else:
+                st.write("### OpenAI Settings")
+                openai_key = os.getenv("OPENAI_API_KEY", "Not Set")
+                masked_key = "***" + openai_key[-4:] if openai_key != "Not Set" else "Not Set"
+                st.write(f"OPENAI_API_KEY: {masked_key}")
+            st.markdown("</div>", unsafe_allow_html=True)
+        
         if USING_AZURE:
-            st.info("Please check your .env file and ensure all required Azure OpenAI variables are set correctly.")
+            st.info("""
+            Please check your .env file and ensure all required Azure OpenAI variables are set correctly:
+            
+            ```
+            AZURE_OPENAI_API_KEY=your_api_key_here
+            AZURE_OPENAI_ENDPOINT=https://your_resource_name.openai.azure.com/
+            AZURE_OPENAI_DEPLOYMENT_NAME=your_deployment_name
+            AZURE_OPENAI_API_VERSION=2024-02-15-preview
+            ```
+            
+            Make sure your deployment is active in Azure OpenAI Studio and the deployment name is correct.
+            """)
         else:
-            st.info("Please set the OPENAI_API_KEY environment variable in your .env file.")
+            st.info("""
+            Please set the OPENAI_API_KEY environment variable in your .env file:
+            
+            ```
+            OPENAI_API_KEY=your_openai_api_key_here
+            ```
+            """)
         return
     
     st.markdown("""
@@ -189,75 +260,82 @@ def main():
                         progress_text = st.empty()
                         
                         # Create the contract analysis crew
-                        crew = ContractAnalysisCrew.create()
-                        
-                        # Start analysis in a way that allows us to update progress
-                        for i, step in enumerate(progress_steps):
-                            progress_text.text(step)
-                            progress_bar.progress((i+1)/len(progress_steps))
+                        try:
+                            crew = ContractAnalysisCrew.create()
                             
-                            # Only do the actual analysis once
-                            if i == 0:
-                                try:
-                                    analysis_results = ContractAnalysisCrew.analyze_contract(crew, document_info["text"])
-                                except Exception as e:
-                                    st.error(f"Error during analysis: {str(e)}")
-                                    st.info("If you're seeing OpenAI API errors, please check your API key and quota limits.")
-                                    return
-                            else:
-                                # Simulate processing time for other steps
-                                time.sleep(1)
-                        
-                        # Analysis complete
-                        progress_bar.progress(100)
-                        progress_text.text("Analysis complete!")
-                        
-                        # Display results
-                        st.markdown("## Analysis Results")
-                        
-                        # Contract Data
-                        if "contract_details" in analysis_results:
-                            with st.expander("📋 Contract Information", expanded=True):
-                                try:
-                                    st.json(analysis_results["contract_details"])
-                                except Exception:
-                                    st.text_area("Contract Data", str(analysis_results["contract_details"]), height=300)
-                        
-                        # Compliance Analysis
-                        if "compliance_analysis" in analysis_results:
-                            with st.expander("⚖️ Compliance Analysis", expanded=True):
-                                try:
-                                    st.json(analysis_results["compliance_analysis"])
-                                except Exception:
-                                    st.markdown(str(analysis_results["compliance_analysis"]))
-                        
-                        # Risk Assessment
-                        if "risk_assessment" in analysis_results:
-                            with st.expander("🚨 Risk Assessment", expanded=True):
-                                try:
-                                    st.json(analysis_results["risk_assessment"])
-                                except Exception:
-                                    st.markdown(str(analysis_results["risk_assessment"]))
-                        
-                        # Summary
-                        st.markdown("## Summary")
-                        st.info("Analysis completed successfully. Review the detailed findings in each section above.")
-                        
-                        # Add download option for the full analysis
-                        combined_analysis = {
-                            "document_name": uploaded_file.name,
-                            "analysis_date": time.strftime("%Y-%m-%d %H:%M:%S"),
-                            "analysis_results": analysis_results
-                        }
-                        
-                        # Convert to JSON for download
-                        analysis_json = json.dumps(combined_analysis, indent=2)
-                        st.download_button(
-                            label="Download Full Analysis Report",
-                            data=analysis_json,
-                            file_name=f"analysis-{uploaded_file.name.split('.')[0]}.json",
-                            mime="application/json"
-                        )
+                            # Start analysis in a way that allows us to update progress
+                            for i, step in enumerate(progress_steps):
+                                progress_text.text(step)
+                                progress_bar.progress((i+1)/len(progress_steps))
+                                
+                                # Only do the actual analysis once
+                                if i == 0:
+                                    try:
+                                        analysis_results = ContractAnalysisCrew.analyze_contract(crew, document_info["text"])
+                                    except Exception as e:
+                                        st.error(f"Error during analysis: {str(e)}")
+                                        st.info("If you're seeing OpenAI API errors, please check your API key and quota limits.")
+                                        with st.expander("Detailed Error Information"):
+                                            st.write(traceback.format_exc())
+                                        return
+                                else:
+                                    # Simulate processing time for other steps
+                                    time.sleep(1)
+                            
+                            # Analysis complete
+                            progress_bar.progress(100)
+                            progress_text.text("Analysis complete!")
+                            
+                            # Display results
+                            st.markdown("## Analysis Results")
+                            
+                            # Contract Data
+                            if "contract_details" in analysis_results:
+                                with st.expander("📋 Contract Information", expanded=True):
+                                    try:
+                                        st.json(analysis_results["contract_details"])
+                                    except Exception:
+                                        st.text_area("Contract Data", str(analysis_results["contract_details"]), height=300)
+                            
+                            # Compliance Analysis
+                            if "compliance_analysis" in analysis_results:
+                                with st.expander("⚖️ Compliance Analysis", expanded=True):
+                                    try:
+                                        st.json(analysis_results["compliance_analysis"])
+                                    except Exception:
+                                        st.markdown(str(analysis_results["compliance_analysis"]))
+                            
+                            # Risk Assessment
+                            if "risk_assessment" in analysis_results:
+                                with st.expander("🚨 Risk Assessment", expanded=True):
+                                    try:
+                                        st.json(analysis_results["risk_assessment"])
+                                    except Exception:
+                                        st.markdown(str(analysis_results["risk_assessment"]))
+                            
+                            # Summary
+                            st.markdown("## Summary")
+                            st.info("Analysis completed successfully. Review the detailed findings in each section above.")
+                            
+                            # Add download option for the full analysis
+                            combined_analysis = {
+                                "document_name": uploaded_file.name,
+                                "analysis_date": time.strftime("%Y-%m-%d %H:%M:%S"),
+                                "analysis_results": analysis_results
+                            }
+                            
+                            # Convert to JSON for download
+                            analysis_json = json.dumps(combined_analysis, indent=2)
+                            st.download_button(
+                                label="Download Full Analysis Report",
+                                data=analysis_json,
+                                file_name=f"analysis-{uploaded_file.name.split('.')[0]}.json",
+                                mime="application/json"
+                            )
+                        except Exception as e:
+                            st.error(f"Error setting up analysis: {str(e)}")
+                            with st.expander("Detailed Error Information"):
+                                st.write(traceback.format_exc())
     
     # Information about the analysis process
     with st.expander("How It Works", expanded=False):

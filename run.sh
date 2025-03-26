@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the virtual environment exists
-if [ ! -d "venv" ]; then
+if [ ! -d ".venv" ]; then
     echo "Creating virtual environment..."
     python3 -m venv .venv
 fi
@@ -74,6 +74,11 @@ AZURE_OPENAI_API_VERSION=2024-02-15-preview
 OPENAI_API_KEY=your_openai_api_key_here
 EOF
     echo "Please edit the .env file with your Azure OpenAI or standard OpenAI credentials before running the application."
+    echo "For Azure OpenAI, make sure to set:"
+    echo "1. AZURE_OPENAI_API_KEY - Your Azure OpenAI API key"
+    echo "2. AZURE_OPENAI_ENDPOINT - Your Azure OpenAI endpoint URL"
+    echo "3. AZURE_OPENAI_DEPLOYMENT_NAME - The deployment name of your model"
+    echo "4. AZURE_OPENAI_API_VERSION - The API version (recommended: 2024-02-15-preview)"
     exit 1
 fi
 

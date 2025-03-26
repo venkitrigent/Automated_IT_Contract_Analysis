@@ -7,9 +7,12 @@ import os
 try:
     from utils.azure_openai_config import get_azure_openai_client
     get_llm = get_azure_openai_client
-except ImportError:
+    print("Successfully loaded Azure OpenAI client for legal compliance")
+except ImportError as e:
+    print(f"Failed to import Azure OpenAI: {str(e)}")
     from utils.openai_fallback import get_openai_client
     get_llm = get_openai_client
+    print("Falling back to standard OpenAI client for legal compliance")
 
 class LegalComplianceAgent:
     """
@@ -27,6 +30,14 @@ class LegalComplianceAgent:
         Returns:
             Legal compliance agent
         """
+        # Initialize LLM with appropriate error handling
+        try:
+            llm = get_llm()
+            print(f"Legal Compliance Agent using LLM: {type(llm).__name__}")
+        except Exception as e:
+            print(f"Error initializing LLM for Legal Compliance Agent: {str(e)}")
+            raise
+            
         return Agent(
             role="Legal Compliance Expert",
             goal="Identify legal compliance issues and risks in IT contracts",
@@ -40,7 +51,7 @@ class LegalComplianceAgent:
             tools=tools or [],  # Use provided tools or empty list if None
             verbose=True,
             allow_delegation=False,
-            llm=get_llm(),
+            llm=llm,
         )
     
     @staticmethod

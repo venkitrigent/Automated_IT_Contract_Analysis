@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-from azure.identity import DefaultAzureCredential
 from langchain_openai import AzureChatOpenAI
 import azure.ai.openai as azure_openai
 
@@ -9,7 +8,7 @@ load_dotenv()
 
 def get_azure_openai_client():
     """
-    Create an Azure OpenAI client using environment variables.
+    Create an Azure OpenAI LangChain client using environment variables.
     
     Returns:
         AzureChatOpenAI configured client for LangChain
