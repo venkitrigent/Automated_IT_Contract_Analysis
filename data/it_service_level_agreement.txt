@@ -1,0 +1,206 @@
+# IT SERVICE LEVEL AGREEMENT (SLA)
+
+| **Document details & change history** |                 |                               |                   |
+| ------------------------------------- | --------------- | ----------------------------- | ----------------- |
+| Version                               | Date            | Description                   | Authorization     |
+| 1.0                                   | March 1, 2023   | Initial SLA                  | J. Bezos          |
+| **Document approvals**                |                 |                               |                   |
+| Name                                  | Role            | Signature                     | Date              |
+| Jeff Bezos                            | CEO, Amazon     | ________________________      | March 1, 2023     |
+| Satya Nadella                         | CEO, Microsoft  | ________________________      | March 1, 2023     |
+
+_Last Review: March 1, 2023_
+
+_Next Scheduled Review: September 1, 2023_
+
+## 1.0 AGREEMENT OVERVIEW
+
+### 1.1 SLA Introduction
+
+This is a Service Level Agreement (SLA) between Amazon Web Services (AWS) ("Service Provider") and Microsoft Corporation ("Customer"). This document identifies the services required and the expected level of services between March 1, 2023 to March 1, 2024.
+
+_Subject to review and renewal scheduled by December 1, 2023._
+
+_Signatories:_
+- Jeff Bezos, CEO, Amazon
+- Satya Nadella, CEO, Microsoft
+
+### 1.2 Definitions, Conventions, Acronyms, and Abbreviations
+
+| **Term**                 | **Description**                                                                                                               |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| SLA                      | Service Level Agreement                                                                                                       |
+| AWS                      | Amazon Web Services                                                                                                           |
+| Availability             | The percentage of time that a service is operational and accessible as agreed                                                  |
+| Downtime                 | Period of time when the service is unavailable and cannot be accessed by the Customer                                         |
+| Incident                 | An unplanned interruption or reduction in quality of an IT service                                                           |
+| Response Time            | The elapsed time between the reporting of an incident and the commencement of work to resolve it                              |
+| Resolution Time          | The elapsed time between the reporting of an incident and its resolution                                                      |
+| Scheduled Maintenance    | Planned outages where the service will be unavailable or operating at reduced capacity for system upgrades and maintenance    |
+
+### 1.3 Purpose
+
+The purpose of this SLA is to specify the requirements of the cloud computing services ("Services") as defined herein with regards to:
+
+* Requirements for AWS cloud services that will be provisioned to Microsoft
+* Agreed service targets
+* Criteria for target fulfillment evaluation
+* Roles and responsibilities of AWS
+* Duration, scope, and renewal of this SLA contract
+* Supporting processes, limitations, exclusions, and deviations
+
+### 1.4 Contractual Parameters
+
+This section specifies the contractual parameters of this agreement:
+
+1. Contract renewal must be requested by Microsoft at least 60 days prior to the expiration date of this agreement.
+2. Modifications, amendments, extension, and early termination of this SLA must be agreed by both signatory parties.
+3. Microsoft requires a minimum of 90 days' notice for early termination of this SLA.
+4. This agreement takes precedence over all previous communications, representations, or agreements, either oral or written, related to the subject matter of this SLA.
+5. This agreement is valid only for services explicitly defined within this document and its appendices.
+
+## 2.0 SERVICE AGREEMENT
+
+### 2.1 KPIs and Metrics
+
+| **Metric**           | **Commitment**                                | **Measurement**                                         |
+| -------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Service Availability | 99.99% uptime                                 | Monthly availability percentage measured continuously    |
+| Transaction Latency  | < 50ms for 99% of all transactions            | Measured at 5-minute intervals                          |
+| Backup Completion    | Daily incremental, weekly full backups        | Success rate > 99.9%                                    |
+| Disaster Recovery    | RTO: 1 hour, RPO: 15 minutes                  | Measured during quarterly DR tests                       |
+| Incident Response    | According to severity levels in section 2.2   | Time from report to acknowledgment                      |
+
+### 2.2 Service Levels, Rankings, and Priority
+
+| **Severity Level** | **Description**                                         | **Target Response**     | **Target Resolution**   |
+| ------------------ | ------------------------------------------------------- | ----------------------- | ----------------------- |
+| 1 - Critical       | Complete service outage affecting all users              | Within 15 minutes      | Within 1 hour           |
+| 2 - High           | Partial service outage affecting multiple users          | Within 30 minutes      | Within 4 hours          |
+| 3 - Medium         | Limited functionality affecting some users               | Within 1 hour          | Within 8 hours          |
+| 4 - Low            | Minor issue with minimal impact                          | Within 4 hours         | Within 24 hours         |
+| 5 - Informational  | Inquiry for information or feature request               | Within 1 business day  | Within 5 business days  |
+
+### 2.3 Service Response
+
+Service Provider will respond to service-related incidents and requests submitted by the Customer within the timeframes specified in Section 2.2. Service-related incidents can be reported 24/7/365 through the following channels:
+
+* Phone: +1-800-555-0123
+* Email: aws-enterprise-support@amazon.com
+* AWS Support Portal: https://support.aws.amazon.com/
+* Microsoft's dedicated AWS account manager
+
+### 2.4 Exceptions and Limitations
+
+This SLA is subject to the following exceptions and special conditions:
+
+* AWS must ensure cloud service availability of 99.999% during Customer's peak business periods dated November 15, 2023 to January 15, 2024.
+* AWS may not be liable for credit reimbursement for service impact to data centers caused by force majeure events.
+* Scheduled maintenance windows are excluded from service availability calculations if Customer has been notified at least 7 days in advance.
+* This SLA does not apply to any software or services provided by third parties through AWS Marketplace.
+* Any downtime caused by Customer's actions or failures to follow AWS recommended configurations will not be eligible for service credits.
+
+### 2.5 Responses and Responsibilities
+
+**Customer responsibilities:**
+
+* Microsoft should provide all necessary information and assistance related to service performance that allows AWS to meet the performance standards as outlined in this document.
+* Microsoft shall inform AWS regarding changing business requirements that may necessitate a review, modification, or amendment of the SLA.
+* Microsoft shall maintain control and responsibility for all Microsoft-managed infrastructure, applications, and data security.
+* Microsoft is responsible for training its personnel on the proper use of AWS services.
+* Microsoft shall ensure that its account and security credentials are properly managed and secured.
+
+**Service Provider responsibilities:**
+
+* AWS will act as primary support provider of the services herein identified, except when third-party vendors are employed, who shall assume appropriate service support responsibilities accordingly.
+* AWS will inform Microsoft regarding scheduled and unscheduled service outages due to maintenance, troubleshooting, or other disruptions.
+* AWS will provide detailed documentation, tools, and best practices to assist Microsoft in optimizing service usage.
+* AWS will maintain appropriate security controls to protect Customer data in accordance with industry standards.
+* AWS will regularly review service performance against this SLA and proactively suggest improvements.
+
+### 2.6 Service Management
+
+#### 2.6.1 Service Availability
+
+Service coverage by AWS as outlined in this agreement follows the schedule specified below:
+
+* Technical Support: 24/7/365
+* Account Management: Business hours (9 AM to 6 PM ET, Monday to Friday)
+* Emergency Support: 24/7/365
+
+#### 2.6.2 Service Monitoring
+
+AWS will monitor the Services 24/7/365 to ensure compliance with this SLA. Microsoft will have access to real-time performance monitoring dashboards through the AWS Management Console. Monthly service reviews will be conducted to evaluate service levels and discuss any issues.
+
+#### 2.6.3 Service Credits
+
+If AWS fails to meet the service availability commitment, Microsoft will be eligible for service credits according to the following schedule:
+
+* Service Availability between 99.9% and 99.99%: 10% credit of monthly service charges
+* Service Availability between 99.0% and 99.9%: 25% credit of monthly service charges
+* Service Availability below 99.0%: 50% credit of monthly service charges
+
+Service credits will be applied to the next billing cycle and cannot be converted to monetary refunds.
+
+## 3.0 REFERENCES AND GLOSSARY
+
+### 3.1 Supporting Agreements and Documents
+
+* AWS Customer Agreement dated February 15, 2023
+* AWS Enterprise Support Plan dated February 15, 2023
+* AWS Data Processing Addendum dated February 15, 2023
+* Microsoft-AWS Strategic Partnership Agreement dated January 10, 2023
+
+### 3.2 Referenced Standards and Best Practices
+
+* ISO/IEC 20000-1: IT Service Management
+* ISO/IEC 27001: Information Security Management
+* NIST Cybersecurity Framework
+* Cloud Security Alliance (CSA) Star Certification
+
+## APPENDIX
+
+### A.1 Pricing Models and Charges
+
+_Pricing models for each service type with detailed specifications._
+
+| **Service**                       | **Capacity**          | **Performance Tier**     | **Price**          |
+| --------------------------------- | --------------------- | ------------------------ | ------------------ |
+| **Compute Services**              |                       |                          |                    |
+| Dedicated EC2 Instances           | 1,000 vCPUs           | High Performance         | $250,000/month     |
+| Container Services (ECS/EKS)      | 500 nodes             | Standard                 | $100,000/month     |
+| **Storage Services**              |                       |                          |                    |
+| S3 Storage                        | 5 PB                  | Standard                 | $100,000/month     |
+| EBS Storage                       | 1 PB                  | SSD (io2)                | $150,000/month     |
+| **Database Services**             |                       |                          |                    |
+| RDS Instances                     | 50 instances          | Enterprise               | $200,000/month     |
+| DynamoDB Capacity                 | 100,000 RCUs/WCUs     | On-demand                | $75,000/month      |
+| **Network Services**              |                       |                          |                    |
+| Direct Connect                    | 10 Gbps x 4           | Redundant                | $25,000/month      |
+| VPN Connections                   | 100 tunnels           | Standard                 | $5,000/month       |
+| **Support**                       |                       |                          |                    |
+| Enterprise Support                | 24/7/365              | Premium                  | $100,000/month     |
+| Technical Account Management      | Dedicated TAM team    | Enterprise               | $50,000/month      |
+
+### A.2 Service Regions and Datacenters
+
+This SLA covers AWS services provided in the following regions:
+
+1. US East (Northern Virginia)
+2. US West (Oregon)
+3. Europe (Ireland)
+4. Asia Pacific (Tokyo)
+5. Asia Pacific (Singapore)
+
+### A.3 Technical Specifications
+
+Additional technical specifications and architectural diagrams are maintained in a separate document titled "Microsoft-AWS Technical Requirements" dated February 28, 2023.
+
+### A.4 Service Reporting
+
+AWS will provide Microsoft with the following regular service reports:
+
+* Daily: Automated availability and performance dashboards
+* Weekly: Security and incident summary
+* Monthly: Comprehensive service review and SLA compliance report
+* Quarterly: Strategic business review and optimization recommendations 

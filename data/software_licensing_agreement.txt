@@ -1,0 +1,240 @@
+# SOFTWARE LICENSING AGREEMENT
+
+**EFFECTIVE DATE:** April 1, 2023
+
+**PARTIES:**
+
+**LICENSOR:**
+Google LLC
+1600 Amphitheatre Parkway  
+Mountain View, CA 94043, USA
+("Google" or "Licensor")
+
+**LICENSEE:**
+Salesforce, Inc.
+Salesforce Tower
+415 Mission Street
+San Francisco, CA 94105, USA
+("Salesforce" or "Licensee")
+
+## 1. DEFINITIONS
+
+1.1 **"Agreement"** means this Software Licensing Agreement.
+
+1.2 **"Confidential Information"** means all non-public information disclosed by one party to the other that is designated as confidential or that, given the nature of the information or circumstances surrounding its disclosure, reasonably should be understood to be confidential.
+
+1.3 **"Documentation"** means all user manuals, operating instructions, technical specifications and other documentation provided by Licensor relating to the Software.
+
+1.4 **"Effective Date"** means the date first written above.
+
+1.5 **"Intellectual Property Rights"** means any and all patents, copyrights, trademarks, service marks, trade secrets, domain names, moral rights, contract rights and other proprietary rights.
+
+1.6 **"License Fees"** means the fees payable by Licensee to Licensor as set forth in Exhibit A.
+
+1.7 **"Software"** means the Google TensorFlow Enterprise software system and any updates, upgrades, or new versions provided to Licensee, all as more fully described in Exhibit A.
+
+1.8 **"Term"** shall have the meaning set forth in Section 9.1.
+
+1.9 **"User"** means an employee or authorized contractor of Licensee who is authorized to use the Software.
+
+## 2. LICENSE GRANT AND RESTRICTIONS
+
+2.1 **License Grant.** Subject to Licensee's compliance with this Agreement, Licensor hereby grants to Licensee a non-exclusive, non-transferable, non-sublicensable license during the Term to:
+
+  (a) install, use and operate the Software solely for Licensee's internal business purposes;
+  
+  (b) make a reasonable number of copies of the Software for backup and archival purposes; and
+  
+  (c) use the Documentation in connection with Licensee's use of the Software.
+
+2.2 **License Restrictions.** Except as expressly permitted in this Agreement, Licensee shall not, and shall not permit any User or third party to:
+
+  (a) copy, modify, adapt, translate, or create derivative works of the Software or Documentation;
+  
+  (b) reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code of the Software;
+  
+  (c) rent, lease, sell, assign, sublicense or otherwise transfer rights in or to the Software or Documentation;
+  
+  (d) remove any proprietary notices or labels on the Software or Documentation;
+  
+  (e) use the Software to operate as a service bureau or application service provider;
+  
+  (f) use the Software for the benefit of any third party;
+  
+  (g) bypass or breach any security device or protection used by the Software; or
+  
+  (h) use the Software in any manner not expressly authorized by this Agreement.
+
+2.3 **Reservation of Rights.** All rights not expressly granted to Licensee in this Agreement are reserved by Licensor. Licensee acknowledges that it obtains no ownership rights in the Software or Documentation.
+
+## 3. DELIVERY AND INSTALLATION
+
+3.1 **Delivery.** Licensor shall deliver to Licensee one (1) copy of the Software in object code form and the Documentation on suitable electronic media or by electronic delivery within five (5) business days after the Effective Date.
+
+3.2 **Installation.** Licensee shall be responsible for installing the Software on its systems in accordance with the installation procedures set forth in the Documentation.
+
+## 4. SUPPORT AND MAINTENANCE
+
+4.1 **Standard Support.** During the Term, Licensor shall provide the standard support and maintenance services described in Exhibit B at no additional charge.
+
+4.2 **Premium Support.** Licensor offers premium support services as described in Exhibit B for an additional fee.
+
+4.3 **Updates and Upgrades.** Licensor shall provide Licensee with all updates, upgrades, new versions, and bug fixes for the Software that Licensor makes generally available to its licensees at no additional charge during the Term.
+
+## 5. FEES AND PAYMENT
+
+5.1 **License Fees.** Licensee shall pay Licensor the License Fees as set forth in Exhibit A.
+
+5.2 **Payment Terms.** Unless otherwise specified in Exhibit A, all fees are due and payable within thirty (30) days after Licensee's receipt of an invoice. All payments shall be made in U.S. dollars.
+
+5.3 **Taxes.** All fees are exclusive of taxes. Licensee shall pay all sales, use, value-added, and other taxes associated with its receipt or use of the Software, excluding taxes based on Licensor's net income.
+
+5.4 **Late Payments.** Any late payments shall bear interest at the rate of 1.5% per month or the highest rate permitted by law, whichever is lower, from the date due until paid.
+
+## 6. PROPRIETARY RIGHTS
+
+6.1 **Ownership.** Licensee acknowledges that the Software and Documentation are licensed, not sold. Licensor and its licensors own and shall retain all right, title, and interest, including all Intellectual Property Rights, in and to the Software and Documentation.
+
+6.2 **Feedback.** If Licensee provides any suggestions, comments, or other feedback to Licensor regarding the Software or Documentation ("Feedback"), Licensee hereby grants Licensor a worldwide, perpetual, irrevocable, royalty-free license to use, copy, modify, create derivative works based upon, and otherwise exploit the Feedback for any purpose.
+
+## 7. CONFIDENTIALITY
+
+7.1 **Protection of Confidential Information.** Each party shall protect the other party's Confidential Information from unauthorized use, access, or disclosure in the same manner as it protects its own confidential information of similar nature, and with no less than reasonable care.
+
+7.2 **Non-Disclosure.** Each party shall not disclose the other party's Confidential Information to any third party except as permitted by this Agreement, and shall use the other party's Confidential Information only for the purpose of exercising its rights and fulfilling its obligations under this Agreement.
+
+7.3 **Exceptions.** Confidential Information does not include information that: (a) is or becomes publicly available through no fault of the receiving party; (b) was known to the receiving party before receipt from the disclosing party; (c) is rightfully obtained by the receiving party from a third party without restriction on use or disclosure; or (d) is independently developed by the receiving party without reference to the disclosing party's Confidential Information.
+
+7.4 **Required Disclosure.** If required by law, the receiving party may disclose the disclosing party's Confidential Information, provided that the receiving party: (a) gives the disclosing party prior notice of such disclosure if legally permitted; (b) discloses only what is required; and (c) uses reasonable efforts to obtain confidential treatment for any Confidential Information so disclosed.
+
+7.5 **Injunctive Relief.** Each party acknowledges that any breach of its obligations with respect to Confidential Information may cause substantial harm to the other party that could not be remedied by payment of damages alone. Accordingly, the other party shall be entitled to seek preliminary and permanent injunctive relief in the event of any such breach, without having to post bond.
+
+## 8. WARRANTIES, DISCLAIMERS AND LIMITATION OF LIABILITY
+
+8.1 **Mutual Warranties.** Each party represents and warrants that: (a) it has the full power and authority to enter into this Agreement; and (b) it shall comply with all laws applicable to its performance under this Agreement.
+
+8.2 **Software Warranty.** Licensor warrants that, for a period of ninety (90) days from the Effective Date, the Software will perform substantially in accordance with the Documentation. Licensor's sole obligation, and Licensee's exclusive remedy, for any breach of this warranty shall be, at Licensor's option, to repair or replace the non-conforming Software or to refund the License Fees paid for the non-conforming Software.
+
+8.3 **Disclaimer.** EXCEPT AS EXPRESSLY PROVIDED IN THIS AGREEMENT, THE SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" AND LICENSOR MAKES NO WARRANTIES, EXPRESS OR IMPLIED, WITH RESPECT TO THE SOFTWARE OR DOCUMENTATION. LICENSOR SPECIFICALLY DISCLAIMS ALL IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND TITLE, AND ANY WARRANTIES ARISING FROM COURSE OF DEALING, USAGE, OR TRADE PRACTICE.
+
+8.4 **Limitation of Liability.** EXCEPT FOR BREACHES OF SECTIONS 2.2 (LICENSE RESTRICTIONS) OR 7 (CONFIDENTIALITY), OR EITHER PARTY'S INDEMNIFICATION OBLIGATIONS:
+
+  (a) NEITHER PARTY SHALL BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, REVENUE, DATA, OR DATA USE, ARISING OUT OF OR RELATED TO THIS AGREEMENT, EVEN IF THE PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES; AND
+  
+  (b) EACH PARTY'S TOTAL LIABILITY FOR ALL DAMAGES ARISING OUT OF OR RELATED TO THIS AGREEMENT SHALL NOT EXCEED THE AMOUNT OF LICENSE FEES PAID BY LICENSEE UNDER THIS AGREEMENT DURING THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO LIABILITY.
+
+## 9. TERM AND TERMINATION
+
+9.1 **Term.** This Agreement shall commence on the Effective Date and shall continue for an initial term of three (3) years unless earlier terminated as provided in this Agreement (the "Initial Term"). Thereafter, this Agreement shall automatically renew for successive one (1) year terms (each a "Renewal Term," and together with the Initial Term, the "Term") unless either party gives the other party written notice of non-renewal at least sixty (60) days before the end of the then-current term.
+
+9.2 **Termination for Breach.** Either party may terminate this Agreement if the other party breaches any material term of this Agreement and fails to cure such breach within thirty (30) days after receiving written notice of the breach.
+
+9.3 **Effect of Termination.** Upon termination of this Agreement: (a) all licenses granted hereunder shall immediately terminate; (b) Licensee shall immediately cease all use of the Software and Documentation; (c) Licensee shall return or destroy all copies of the Software and Documentation in its possession or control, and certify in writing to Licensor that it has done so; and (d) each party shall return or destroy all Confidential Information of the other party in its possession or control, and certify in writing to the other party that it has done so.
+
+9.4 **Survival.** The provisions of Sections 1, 2.2, 2.3, 5.3, 5.4, 6, 7, 8.3, 8.4, 9.3, 9.4, and 10 shall survive termination of this Agreement.
+
+## 10. GENERAL PROVISIONS
+
+10.1 **Entire Agreement.** This Agreement, including all exhibits, constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior or contemporaneous communications, representations, or agreements, whether oral or written.
+
+10.2 **Amendment.** This Agreement may be amended only by a written document signed by both parties.
+
+10.3 **Assignment.** Neither party may assign this Agreement or any of its rights or obligations hereunder without the prior written consent of the other party, except that either party may assign this Agreement to a successor in connection with a merger, acquisition, or sale of all or substantially all of its assets. Any attempted assignment in violation of this Section shall be void.
+
+10.4 **Governing Law.** This Agreement shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law principles. The parties agree that the United Nations Convention on Contracts for the International Sale of Goods does not apply to this Agreement.
+
+10.5 **Dispute Resolution.** Any dispute arising out of or relating to this Agreement shall be resolved by binding arbitration conducted in San Francisco, California, in accordance with the Commercial Arbitration Rules of the American Arbitration Association. The number of arbitrators shall be one. The arbitration shall be conducted in English. Judgment upon the award rendered by the arbitrator may be entered in any court of competent jurisdiction.
+
+10.6 **Notices.** All notices required or permitted under this Agreement shall be in writing and shall be deemed given when: (a) delivered personally; (b) sent by confirmed email; or (c) sent by nationally recognized overnight courier, to the address specified below or such other address as the party specifies in writing:
+
+If to Licensor:
+Google LLC
+Legal Department
+1600 Amphitheatre Parkway
+Mountain View, CA 94043
+Email: legal-notices@google.com
+
+If to Licensee:
+Salesforce, Inc.
+Legal Department
+Salesforce Tower
+415 Mission Street
+San Francisco, CA 94105
+Email: legal@salesforce.com
+
+10.7 **Waiver.** The waiver by either party of any breach of any provision of this Agreement shall not operate or be construed as a waiver of any other or subsequent breach of the same or any other provision.
+
+10.8 **Severability.** If any provision of this Agreement is held to be invalid or unenforceable, the remaining provisions of this Agreement will remain in full force and effect.
+
+10.9 **Force Majeure.** Neither party shall be liable for any failure or delay in performance under this Agreement due to causes beyond its reasonable control, including but not limited to acts of God, acts of civil or military authority, fires, floods, earthquakes, riots, wars, sabotage, or governmental actions.
+
+10.10 **Relationship of Parties.** The parties are independent contractors. This Agreement does not create a partnership, franchise, joint venture, agency, fiduciary, or employment relationship between the parties.
+
+10.11 **Counterparts.** This Agreement may be executed in counterparts, each of which shall be deemed an original, but all of which together shall constitute one and the same instrument.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.
+
+**GOOGLE LLC**
+
+By: ______________________________
+Name: Sundar Pichai
+Title: Chief Executive Officer
+Date: April 1, 2023
+
+**SALESFORCE, INC.**
+
+By: ______________________________
+Name: Marc Benioff
+Title: Chair and Co-Chief Executive Officer
+Date: April 1, 2023
+
+## EXHIBIT A
+### SOFTWARE DESCRIPTION AND LICENSE FEES
+
+**Software Description:**
+Google TensorFlow Enterprise is an enterprise-grade platform for machine learning that includes:
+- TensorFlow core libraries and frameworks
+- Enterprise-specific optimizations and security features
+- Integration with Google Cloud services
+- Pre-trained models for common business use cases
+- Model management and deployment tools
+- Enterprise development tools
+
+**License Scope:**
+- Number of authorized users: 5,000
+- Number of production deployments: 50
+- Number of test/development environments: Unlimited
+
+**License Fees:**
+- Initial license fee: $5,000,000
+- Annual maintenance and support fee: $1,000,000 (billed annually)
+- Premium support (optional): $500,000 annually
+
+**Payment Schedule:**
+- Initial license fee due within 30 days of the Effective Date
+- Annual maintenance and support fee due on each anniversary of the Effective Date
+
+## EXHIBIT B
+### SUPPORT AND MAINTENANCE SERVICES
+
+**Standard Support (included with license):**
+- Email support: Business hours (9am - 5pm PT, Monday-Friday)
+- Response time: Within 24 hours
+- Online knowledge base and documentation access
+- Bug fixes and patches
+- Quarterly software updates
+- Named technical support contacts: 3
+
+**Premium Support (additional fee):**
+- 24/7 email and phone support
+- Response time: 
+  - Critical issues: 1 hour
+  - High priority issues: 4 hours
+  - Medium priority issues: 8 hours
+  - Low priority issues: 24 hours
+- Dedicated technical account manager
+- Priority bug fixes
+- Monthly software updates
+- Named technical support contacts: 10
+- Quarterly on-site technical reviews
+- Early access to new features

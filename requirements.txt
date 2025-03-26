@@ -1,0 +1,13 @@
+streamlit
+crewai
+langchain
+langchain-openai
+langchain-community
+pydantic
+python-dotenv
+azure-openai
+openai
+PyPDF2
+docx2txt
+pandas
+azure-identity
