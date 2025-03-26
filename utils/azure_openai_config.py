@@ -1,7 +1,8 @@
 import os
-from langchain_openai import AzureChatOpenAI
 from dotenv import load_dotenv
-from openai import AzureOpenAI
+from azure.identity import DefaultAzureCredential
+from langchain_openai import AzureChatOpenAI
+import azure.ai.openai as azure_openai
 
 # Load environment variables
 load_dotenv()
@@ -27,10 +28,10 @@ def get_azure_openai_client():
     
     # Set up Azure OpenAI client for LangChain
     client = AzureChatOpenAI(
-        openai_api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
         azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-        api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+        openai_api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview"),
+        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
         temperature=0.0,  # Use 0 temperature for more consistent/factual responses
     )
     
@@ -41,13 +42,12 @@ def get_native_azure_client():
     Create a native Azure OpenAI client using environment variables.
     
     Returns:
-        AzureOpenAI client (native OpenAI SDK)
+        AzureOpenAI client (native Azure SDK)
     """
     # Check for required environment variables
     required_env_vars = [
         "AZURE_OPENAI_API_KEY",
-        "AZURE_OPENAI_ENDPOINT",
-        "AZURE_OPENAI_API_VERSION"
+        "AZURE_OPENAI_ENDPOINT"
     ]
     
     for var in required_env_vars:
@@ -55,9 +55,9 @@ def get_native_azure_client():
             raise ValueError(f"Missing required environment variable: {var}")
     
     # Set up native Azure OpenAI client
-    client = AzureOpenAI(
+    client = azure_openai.AzureOpenAI(
         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-        api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+        api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview"),
         azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
     )
     

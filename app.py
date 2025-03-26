@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from utils.document_parser import parse_document
-from agents.contract_analysis_crew import ContractAnalysisCrew
+from utils.contract_analysis_crew import ContractAnalysisCrew
 
 # Try to import Azure OpenAI
 try:
@@ -188,8 +188,8 @@ def main():
                         # Show progress text
                         progress_text = st.empty()
                         
-                        # Simulate incremental progress while analysis is happening
-                        crew = ContractAnalysisCrew()
+                        # Create the contract analysis crew
+                        crew = ContractAnalysisCrew.create()
                         
                         # Start analysis in a way that allows us to update progress
                         for i, step in enumerate(progress_steps):
@@ -199,7 +199,7 @@ def main():
                             # Only do the actual analysis once
                             if i == 0:
                                 try:
-                                    analysis_results = crew.analyze_contract(document_info["text"])
+                                    analysis_results = ContractAnalysisCrew.analyze_contract(crew, document_info["text"])
                                 except Exception as e:
                                     st.error(f"Error during analysis: {str(e)}")
                                     st.info("If you're seeing OpenAI API errors, please check your API key and quota limits.")
@@ -216,23 +216,28 @@ def main():
                         st.markdown("## Analysis Results")
                         
                         # Contract Data
-                        if analysis_results["contract_data"]:
+                        if "contract_details" in analysis_results:
                             with st.expander("📋 Contract Information", expanded=True):
                                 try:
-                                    contract_data = json.loads(analysis_results["contract_data"]) if isinstance(analysis_results["contract_data"], str) else analysis_results["contract_data"]
-                                    st.json(contract_data)
-                                except Exception as e:
-                                    st.text_area("Contract Data", analysis_results["contract_data"], height=300)
+                                    st.json(analysis_results["contract_details"])
+                                except Exception:
+                                    st.text_area("Contract Data", str(analysis_results["contract_details"]), height=300)
                         
                         # Compliance Analysis
-                        if analysis_results["compliance_analysis"]:
+                        if "compliance_analysis" in analysis_results:
                             with st.expander("⚖️ Compliance Analysis", expanded=True):
-                                st.markdown(analysis_results["compliance_analysis"])
+                                try:
+                                    st.json(analysis_results["compliance_analysis"])
+                                except Exception:
+                                    st.markdown(str(analysis_results["compliance_analysis"]))
                         
                         # Risk Assessment
-                        if analysis_results["risk_assessment"]:
+                        if "risk_assessment" in analysis_results:
                             with st.expander("🚨 Risk Assessment", expanded=True):
-                                st.markdown(analysis_results["risk_assessment"])
+                                try:
+                                    st.json(analysis_results["risk_assessment"])
+                                except Exception:
+                                    st.markdown(str(analysis_results["risk_assessment"]))
                         
                         # Summary
                         st.markdown("## Summary")
@@ -242,9 +247,7 @@ def main():
                         combined_analysis = {
                             "document_name": uploaded_file.name,
                             "analysis_date": time.strftime("%Y-%m-%d %H:%M:%S"),
-                            "contract_data": analysis_results["contract_data"],
-                            "compliance_analysis": analysis_results["compliance_analysis"],
-                            "risk_assessment": analysis_results["risk_assessment"]
+                            "analysis_results": analysis_results
                         }
                         
                         # Convert to JSON for download

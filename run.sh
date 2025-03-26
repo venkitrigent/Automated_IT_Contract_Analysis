@@ -28,11 +28,13 @@ crewai>=0.20.0
 python-dotenv>=0.19.0
 openai>=1.10.0
 langchain>=0.0.267
+langchain-openai>=0.0.2
+langchain-community>=0.0.10
+pydantic>=2.0.0
 pypdf>=3.15.0
 docx2txt>=0.8
 pandas>=1.5.0
 azure-identity>=1.10.0
-pydantic>=2.0.0
 EOF
     
     echo "Installing with flexible requirements..."
@@ -67,8 +69,11 @@ AZURE_OPENAI_API_KEY=your_api_key_here
 AZURE_OPENAI_ENDPOINT=https://your_resource_name.openai.azure.com/
 AZURE_OPENAI_DEPLOYMENT_NAME=your_deployment_name
 AZURE_OPENAI_API_VERSION=2024-02-15-preview
+
+# Standard OpenAI (used as fallback)
+OPENAI_API_KEY=your_openai_api_key_here
 EOF
-    echo "Please edit the .env file with your Azure OpenAI credentials before running the application."
+    echo "Please edit the .env file with your Azure OpenAI or standard OpenAI credentials before running the application."
     exit 1
 fi
 
