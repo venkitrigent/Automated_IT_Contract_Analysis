@@ -3,11 +3,11 @@
 # Check if the virtual environment exists
 if [ ! -d "venv" ]; then
     echo "Creating virtual environment..."
-    python -m venv venv
+    python3 -m venv .venv
 fi
 
 # Activate the virtual environment
-source venv/bin/activate
+source .venv/bin/activate
 
 # Install dependencies
 echo "Installing dependencies..."
