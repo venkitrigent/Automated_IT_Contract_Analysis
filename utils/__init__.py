@@ -1,6 +1,6 @@
 # Utility modules for IT Contract Analysis
 from utils.document_parser import parse_document, chunk_text
-from utils.contract_analysis_crew import ContractAnalysisCrew
+# Removed import for contract_analysis_crew since it has been moved to root directory
 
 # Dynamic imports for OpenAI configuration
 try:
@@ -11,5 +11,6 @@ except ImportError:
 __all__ = [
     'parse_document',
     'chunk_text',
-    'get_azure_openai_client'
+    'get_azure_openai_client',
+    'get_native_azure_client'
 ] 

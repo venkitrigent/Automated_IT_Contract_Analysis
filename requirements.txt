@@ -1,13 +1,14 @@
-streamlit==1.32.0
-crewai==0.28.5
-langchain==0.1.1
-langchain-openai==0.0.5
-langchain-community==0.0.13
-pydantic==2.5.2
-python-dotenv==1.0.0
-azure-openai>=1.0.0
+streamlit>=1.32.0
+crewai>=0.28.5
+langchain>=0.1.1
+langchain-openai>=0.0.5
+langchain-community>=0.0.13
+pydantic>=1.10.8,<2.0.0
+python-dotenv>=1.0.0
 openai>=1.6.0
-PyPDF2==3.0.1
-docx2txt
-pandas
+# azure-openai>=1.0.0 - Not available, using direct LLM configuration instead
+PyPDF2>=3.0.1
+docx2txt>=0.8
+pandas>=1.5.0
+litellm>=1.30.0
 azure-identity

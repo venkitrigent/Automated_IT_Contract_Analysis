@@ -10,19 +10,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from utils.document_parser import parse_document
-from utils.contract_analysis_crew import ContractAnalysisCrew
+from crew import ContractAnalysisCrew
 
-# Try to import Azure OpenAI
-try:
-    from utils.azure_openai_config import get_azure_openai_client, get_native_azure_client
-    USING_AZURE = True
-    print("Successfully loaded Azure OpenAI configuration")
-except ImportError as e:
-    # Fallback to standard OpenAI
-    print(f"Error importing Azure OpenAI: {str(e)}")
-    from utils.openai_fallback import get_openai_client, get_native_openai_client
-    USING_AZURE = False
-    print("Using standard OpenAI instead of Azure OpenAI due to import error")
+# Check if Azure OpenAI or OpenAI is configured
+USING_AZURE = os.getenv("AZURE_OPENAI_API_KEY") is not None and \
+              os.getenv("AZURE_OPENAI_ENDPOINT") is not None and \
+              os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME") is not None
 
 # Set page configuration
 st.set_page_config(
@@ -79,7 +72,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-def validate_llm_config():
+def validate_config():
     """Validate the LLM configuration and return status"""
     if USING_AZURE:
         # Azure OpenAI validation
@@ -103,46 +96,16 @@ def validate_llm_config():
             for var in missing_vars:
                 print(f"✗ {var} is missing")
             return False, f"Missing environment variables: {', '.join(missing_vars)}"
-        
-        # Test connection to Azure OpenAI
-        try:
-            print(f"Testing Azure OpenAI connection...")
-            client = get_native_azure_client()
-            # Simple test to see if the client is working
-            models = client.models.list()
-            print(f"✓ Azure OpenAI connection successful. Available models: {[m.id for m in models]}")
-            return True, "Azure OpenAI configuration is valid."
-        except Exception as e:
-            error_msg = str(e)
-            traceback.print_exc()
-            print(f"✗ Error connecting to Azure OpenAI: {error_msg}")
-            return False, f"Error connecting to Azure OpenAI: {error_msg}"
+            
+        return True, "Azure OpenAI configuration is valid."
     else:
         # Standard OpenAI validation
         if not os.getenv("OPENAI_API_KEY"):
-            # Try to use Azure key as fallback
-            if os.getenv("AZURE_OPENAI_API_KEY"):
-                os.environ["OPENAI_API_KEY"] = os.getenv("AZURE_OPENAI_API_KEY")
-                print("Using AZURE_OPENAI_API_KEY as fallback for OPENAI_API_KEY")
-            else:
-                print("✗ OPENAI_API_KEY is missing")
-                return False, "Missing OPENAI_API_KEY environment variable"
+            print("✗ OPENAI_API_KEY is missing")
+            return False, "Missing OPENAI_API_KEY environment variable"
         else:
             print("✓ OPENAI_API_KEY is set")
-                
-        # Test connection to OpenAI
-        try:
-            print(f"Testing OpenAI connection...")
-            client = get_native_openai_client()
-            # Simple test to see if the client is working
-            models = client.models.list()
-            print(f"✓ OpenAI connection successful")
             return True, "OpenAI configuration is valid."
-        except Exception as e:
-            error_msg = str(e)
-            traceback.print_exc()
-            print(f"✗ Error connecting to OpenAI: {error_msg}")
-            return False, f"Error connecting to OpenAI: {error_msg}"
 
 def main():
     # Title and description
@@ -152,10 +115,10 @@ def main():
     if USING_AZURE:
         st.success("Using Azure OpenAI for analysis")
     else:
-        st.warning("Using standard OpenAI API for analysis (Azure OpenAI not available)")
+        st.warning("Using standard OpenAI API for analysis")
     
     # Check LLM Configuration
-    config_valid, config_message = validate_llm_config()
+    config_valid, config_message = validate_config()
     
     if not config_valid:
         st.error(f"LLM Configuration Error: {config_message}")
@@ -259,30 +222,15 @@ def main():
                         # Show progress text
                         progress_text = st.empty()
                         
-                        # Create the contract analysis crew
+                        # Create initial progress
+                        progress_text.text(progress_steps[0])
+                        progress_bar.progress(20)
+                        
                         try:
-                            crew = ContractAnalysisCrew.create()
+                            # Run the analysis with our CrewAI crew
+                            analysis_results = ContractAnalysisCrew.analyze_contract(document_info["text"])
                             
-                            # Start analysis in a way that allows us to update progress
-                            for i, step in enumerate(progress_steps):
-                                progress_text.text(step)
-                                progress_bar.progress((i+1)/len(progress_steps))
-                                
-                                # Only do the actual analysis once
-                                if i == 0:
-                                    try:
-                                        analysis_results = ContractAnalysisCrew.analyze_contract(crew, document_info["text"])
-                                    except Exception as e:
-                                        st.error(f"Error during analysis: {str(e)}")
-                                        st.info("If you're seeing OpenAI API errors, please check your API key and quota limits.")
-                                        with st.expander("Detailed Error Information"):
-                                            st.write(traceback.format_exc())
-                                        return
-                                else:
-                                    # Simulate processing time for other steps
-                                    time.sleep(1)
-                            
-                            # Analysis complete
+                            # Update progress to completion
                             progress_bar.progress(100)
                             progress_text.text("Analysis complete!")
                             
@@ -293,7 +241,10 @@ def main():
                             if "contract_details" in analysis_results:
                                 with st.expander("📋 Contract Information", expanded=True):
                                     try:
-                                        st.json(analysis_results["contract_details"])
+                                        if isinstance(analysis_results["contract_details"], dict):
+                                            st.json(analysis_results["contract_details"])
+                                        else:
+                                            st.text_area("Contract Data", str(analysis_results["contract_details"]), height=300)
                                     except Exception:
                                         st.text_area("Contract Data", str(analysis_results["contract_details"]), height=300)
                             
@@ -301,7 +252,10 @@ def main():
                             if "compliance_analysis" in analysis_results:
                                 with st.expander("⚖️ Compliance Analysis", expanded=True):
                                     try:
-                                        st.json(analysis_results["compliance_analysis"])
+                                        if isinstance(analysis_results["compliance_analysis"], dict):
+                                            st.json(analysis_results["compliance_analysis"])
+                                        else:
+                                            st.markdown(str(analysis_results["compliance_analysis"]))
                                     except Exception:
                                         st.markdown(str(analysis_results["compliance_analysis"]))
                             
@@ -309,7 +263,10 @@ def main():
                             if "risk_assessment" in analysis_results:
                                 with st.expander("🚨 Risk Assessment", expanded=True):
                                     try:
-                                        st.json(analysis_results["risk_assessment"])
+                                        if isinstance(analysis_results["risk_assessment"], dict):
+                                            st.json(analysis_results["risk_assessment"])
+                                        else:
+                                            st.markdown(str(analysis_results["risk_assessment"]))
                                     except Exception:
                                         st.markdown(str(analysis_results["risk_assessment"]))
                             
@@ -333,7 +290,7 @@ def main():
                                 mime="application/json"
                             )
                         except Exception as e:
-                            st.error(f"Error setting up analysis: {str(e)}")
+                            st.error(f"Error during analysis: {str(e)}")
                             with st.expander("Detailed Error Information"):
                                 st.write(traceback.format_exc())
     
@@ -356,11 +313,13 @@ def main():
            
         ### The Team Behind the Analysis
 
-        Our system uses advanced AI agents specialized in different aspects of contract analysis:
+        Our system uses a crew of AI agents specialized in different aspects of contract analysis:
 
-        - **Document Parsing Agent**: Extracts and structures key contract information
-        - **Legal Compliance Agent**: Ensures contracts meet regulatory requirements
-        - **Risk Analysis Agent**: Identifies and quantifies business risks
+        - **Document Parsing Specialist**: Extracts and structures key contract information
+        - **Legal Compliance Expert**: Analyzes contracts for legal and regulatory compliance
+        - **Risk Assessment Specialist**: Identifies and quantifies business risks
+        
+        This system is built with CrewAI, an orchestration framework for agentic workflows.
         """)
 
 if __name__ == "__main__":
